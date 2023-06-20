@@ -1,0 +1,61 @@
+.app-header {
+  display: flex;
+  font-family: yekan;
+  font-weight: normal;
+  background-color: white;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.15);
+  color: black;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 16px;
+  z-index: 1;
+}
+
+.header-logo-container {
+  display: flex;
+}
+
+.header-logo {
+  margin: 0;
+  width: 48px;
+  height: 48px;
+}
+
+.header-menu-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.header-menu {
+  display: flex;
+  list-style-type: none;
+}
+
+.header-menu li {
+  text-align: left;
+  list-style: none;
+}
+
+.header-menu li a {
+  color: black;
+  text-decoration: none;
+  padding: 8px 12px 8px 12px;
+  border-radius: 16px;
+  transition: 200ms;
+}
+.header-menu li a:hover {
+  color: var(--primary-color);
+  background-color: #dcf3f5;
+  border-radius: 16px;
+}
+
+#header-download-btn {
+  color: white;
+  background-color: var(--primary-color);
+  border-radius: 16px;
+}
+#header-download-btn:hover {
+  background-color: white;
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+}
