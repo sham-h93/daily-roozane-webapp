@@ -4,7 +4,8 @@ import EditNote from "../edit-note/editNote";
 const Notes = () => {
   return (
     <div className="app-notes">
-      <ul className="app-notes-list">
+      <EditNote />
+      {/* <ul className="app-notes-list">
         <li>
           <Note />
         </li>
@@ -71,7 +72,7 @@ const Notes = () => {
         <li>
           <Note />
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 };

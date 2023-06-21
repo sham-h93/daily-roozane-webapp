@@ -1,0 +1,172 @@
+.edit-note-container {
+  height: 100%;
+  display: flex;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+.edit-note-form {
+  width: 100%;
+  height: max-content;
+  display: grid;
+  box-shadow: none;
+  background-color: transparent;
+  grid-template-rows: auto auto auto;
+  padding: 16px;
+}
+.edit-note-title {
+  height: 64px;
+  font-family: yekan;
+  grid-column: 1 / span 4;
+  color: #555;
+  padding: 16px;
+  margin: 8px;
+  border: none;
+  border-radius: 20px;
+  gap: 8px;
+  font-size: 16px;
+  outline: none;
+}
+.edit-note-title:focus,
+.edit-note-description:focus {
+  border: 1px solid var(--primary-color);
+}
+.edit-note-description {
+  font-family: yekan;
+  font-size: 16px;
+  grid-column: 1 / span 4;
+  color: #555;
+  padding: 16px;
+  margin: 8px;
+  border: none;
+  border-radius: 20px;
+  gap: 8px;
+  outline: none;
+  resize: none;
+}
+.edit-note-radio-fieldset {
+  border: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-column: 1 / span 2;
+}
+.edit-note-button-fieldset {
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-column: 3 / span 2;
+  gap: 8px;
+}
+
+.edit-note-delete {
+  width: 100%;
+}
+.edit-note-cancel {
+  width: 100%;
+}
+.edit-note-save {
+  width: 100%;
+}
+
+input {
+  transition: 200ms;
+}
+input[type="radio"]:hover {
+  padding: 24px;
+}
+input[type="submit"] {
+  height: 48px;
+  font-family: yekan;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 16px;
+  border: none;
+}
+input[type="submit"]:hover {
+  background-color: var(--primary-dark-color);
+}
+input[type="button"] {
+  height: 48px;
+  font-family: yekan;
+  background-color: transparent;
+  border-radius: 16px;
+  border: 1px solid var(--primary-color);
+}
+input[type="button"]:hover {
+  background-color: var(--highlight-color);
+  border: none;
+}
+
+#lavendar {
+  height: 32px;
+  width: 32px;
+  appearance: none;
+  border-radius: 50%;
+  background: white;
+  outline: 3px solid var(--lavendar-color);
+}
+
+#lavendar:checked {
+  background: var(--lavendar-color);
+}
+#blue {
+  height: 32px;
+  width: 32px;
+  appearance: none;
+  border-radius: 50%;
+  background: white;
+  outline: 3px solid var(--blue-color);
+}
+
+#blue:checked {
+  background: var(--blue-color);
+}
+#aqua {
+  height: 32px;
+  width: 32px;
+  appearance: none;
+  border-radius: 50%;
+  background: white;
+  outline: 3px solid var(--aqua-color);
+}
+
+#aqua:checked {
+  background: var(--aqua-color);
+}
+#green {
+  height: 32px;
+  width: 32px;
+  appearance: none;
+  border-radius: 50%;
+  background: white;
+  outline: 3px solid var(--green-color);
+}
+
+#green:checked {
+  background: var(--green-color);
+}
+#yellow {
+  height: 32px;
+  width: 32px;
+  appearance: none;
+  border-radius: 50%;
+  background: white;
+  outline: 3px solid var(--yellow-color);
+}
+
+#yellow:checked {
+  background: var(--yellow-color);
+}
+#orange {
+  height: 32px;
+  width: 32px;
+  appearance: none;
+  border-radius: 50%;
+  background: white;
+  outline: 3px solid var(--orange-color);
+}
+
+#orange:checked {
+  background: var(--orange-color);
+}

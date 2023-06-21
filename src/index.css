@@ -14,9 +14,16 @@
   -webkit-text-size-adjust: 100%;
 
   --primary-color: #0ebcce;
+  --primary-dark-color: #109baa;
   --highlight-color: #dcf3f5;
   --side-highlight-color: #dcf3f526;
   --dark-color: #101010;
+  --lavendar-color: #ba98ed;
+  --blue-color: #88b5e8;
+  --aqua-color: #a6dfd7;
+  --green-color: #9cf29c;
+  --yellow-color: #f1ea8b;
+  --orange-color: #fac896;
 }
 
 * {
