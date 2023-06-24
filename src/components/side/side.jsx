@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { MdSearch, MdEditNote } from "react-icons/md";
-
 import "./side.css";
+import { AppContext } from "../../AppContext";
 const Side = () => {
   const [searchField, setSearchField] = useState("");
+  const { setEditNote } = useContext(AppContext);
 
   const handleSearch = (e) => {
     setSearchField(e.target.value);
+  };
+
+  const handleNewNoteClick = (e) => {
+    setEditNote(true);
   };
 
   return (
@@ -22,7 +27,7 @@ const Side = () => {
         />
       </form>
 
-      <div className="side-add-note">
+      <div className="side-add-note" onClick={handleNewNoteClick}>
         <MdEditNote className="side-search-icon" />
         افزودن یادداشت جدید
       </div>

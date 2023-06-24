@@ -3,6 +3,7 @@
   display: flex;
   overflow-y: auto;
   overflow-x: auto;
+  transition: 200ms;
 }
 .edit-note-form {
   width: 100%;

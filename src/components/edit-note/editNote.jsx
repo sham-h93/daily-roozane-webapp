@@ -1,5 +1,12 @@
+import { useContext } from "react";
+import { AppContext } from "../../AppContext";
 import "./editNote.css";
-const EditNote = () => {
+const EditNote = ({ note }) => {
+  const { setEditNote } = useContext(AppContext);
+
+  const handleCancelClick = () => {
+    setEditNote(false);
+  };
   return (
     <div className="edit-note-container">
       <form className="edit-note-form">
@@ -14,11 +21,7 @@ const EditNote = () => {
           cols="50"
           placeholder="یادداشت"
         ></textarea>
-        {/* <textarea
-          type="text"
-          placeholder="یادداشت"
-          className="edit-note-description"
-        /> */}
+
         <fieldset className="edit-note-radio-fieldset">
           <input type="radio" name="edit-note-color" id="lavendar" />
           <input type="radio" name="edit-note-color" id="blue" />
@@ -29,7 +32,12 @@ const EditNote = () => {
         </fieldset>
         <fieldset className="edit-note-button-fieldset">
           <input type="button" className="edit-note-delete" value="حذف" />
-          <input type="button" className="edit-note-cancel" value="بی خیال" />
+          <input
+            type="button"
+            className="edit-note-cancel"
+            value="بی خیال"
+            onClick={handleCancelClick}
+          />
           <input type="submit" className="edit-note-save" value="ذخیره" />
         </fieldset>
       </form>
