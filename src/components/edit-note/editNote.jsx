@@ -1,11 +1,36 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../AppContext";
 import "./editNote.css";
-const EditNote = ({ note }) => {
-  const { setEditNote } = useContext(AppContext);
+import useAxios from "../../useAxios";
+const EditNote = () => {
+  const [noteObj, setNoteObj] = useState({
+    title: "عنوان یادداشت",
+    description: "متن یادداشت",
+  });
+  const { setEditNote, setNoteId, noteId } = useContext(AppContext);
+  const [url, setUrl] = useState(["get", `note?_id=${noteId}`]);
+  console.log(url);
+  const [response] = useAxios(url[0], url[1], url[2]);
 
-  const handleCancelClick = () => {
+  useEffect(() => {
+    if (url[0] === "post") {
+      closeEditNoteComponent();
+    }
+    setNoteObj(response);
+  }, [response, url]);
+
+  const handleTitleInputChange = (e) => {
+    setNoteObj({ ...noteObj, title: e.target.value });
+  };
+  const handleDescriptionInputChange = (e) => {
+    setNoteObj({ ...noteObj, description: e.target.value });
+  };
+  const closeEditNoteComponent = () => {
+    setNoteId(null);
     setEditNote(false);
+  };
+  const handleSaveClick = () => {
+    setUrl(["post", "new-note?", noteObj]);
   };
   return (
     <div className="edit-note-container">
@@ -14,14 +39,17 @@ const EditNote = ({ note }) => {
           type="text"
           placeholder="عنوان یادداشت"
           className="edit-note-title"
+          value={noteObj?.title}
+          onChange={(e) => handleTitleInputChange(e)}
         />
         <textarea
           className="edit-note-description"
           rows="10"
           cols="50"
           placeholder="یادداشت"
+          value={noteObj?.description}
+          onChange={(e) => handleDescriptionInputChange(e)}
         ></textarea>
-
         <fieldset className="edit-note-radio-fieldset">
           <input type="radio" name="edit-note-color" id="lavendar" />
           <input type="radio" name="edit-note-color" id="blue" />
@@ -36,9 +64,14 @@ const EditNote = ({ note }) => {
             type="button"
             className="edit-note-cancel"
             value="بی خیال"
-            onClick={handleCancelClick}
+            onClick={closeEditNoteComponent}
           />
-          <input type="submit" className="edit-note-save" value="ذخیره" />
+          <input
+            type="button"
+            className="edit-note-save"
+            value="ذخیره"
+            onClick={handleSaveClick}
+          />
         </fieldset>
       </form>
     </div>
