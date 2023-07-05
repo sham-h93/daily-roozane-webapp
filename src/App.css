@@ -1,0 +1,21 @@
+<<<<<<< HEAD
+=======
+.app-container {
+  width: 100%;
+  height: 100vb;
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.app-header {
+  grid-column: 1 / span 3;
+}
+
+.app-side {
+}
+
+.app-notes {
+}
+>>>>>>> e2145de1fee1e91f178adf8e98617437385a8960
