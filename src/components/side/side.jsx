@@ -1,16 +1,29 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { MdSearch, MdEditNote } from "react-icons/md";
 import "./side.css";
 import { AppContext } from "../../AppContext";
+import useAxios from "../../useAxios";
+
 const Side = () => {
   const [searchField, setSearchField] = useState("");
-  const { setEditNote } = useContext(AppContext);
+  const { setEditNote, setNotes, requestUrl, setRequestUrl } =
+    useContext(AppContext);
+
+  // useEffect(() => {
+  //   setRequestUrl(["get", "notes?", { title: `${searchField}` }]);
+  //   console.log(requestUrl);
+  // }, [searchField]);
+
+  // useEffect(() => {
+  //   //setNotes(response);
+  //   console.log(requestUrl + " SIDE 2");
+  // }, [requestUrl[2]]);
 
   const handleSearch = (e) => {
     setSearchField(e.target.value);
   };
 
-  const handleNewNoteClick = (e) => {
+  const handleNewNoteClick = () => {
     setEditNote(true);
   };
 

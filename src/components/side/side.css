@@ -1,9 +1,9 @@
 .app-side {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: var(--primary-color);
   align-items: center;
+  padding: 16px;
 }
 
 .app-side form {
@@ -27,6 +27,7 @@
   width: 100%;
   border-radius: 16px;
   font-family: yekan;
+  font-size: 20px;
   border: none;
 }
 

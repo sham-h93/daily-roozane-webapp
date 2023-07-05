@@ -1,21 +1,22 @@
 import "./header.css";
 import dailyLogo from "../../assets/daily-logo.svg";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
-    <div className="app-header">
+    <header className="app-header">
       <div className="header-logo-container">
         <img className="header-logo" src={dailyLogo} alt="Daily" />
       </div>
-      <div className="header-menu-container">
+      <nav className="header-menu-container">
         <ul className="header-menu">
           <li>
-            <a href="">خانه</a>
+            <Link to="/">خانه</Link>
           </li>
           <li>
-            <a href="">درباره ما</a>
+            <Link to="/about-us">درباره ما</Link>
           </li>
           <li>
-            <a href="">تماس با ما</a>
+            <Link to="/contact-us">تماس با ما</Link>
           </li>
           <li>
             <a id="header-download-btn" href="">
@@ -23,8 +24,8 @@ const Header = () => {
             </a>
           </li>
         </ul>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 

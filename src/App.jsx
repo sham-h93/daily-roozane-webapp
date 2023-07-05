@@ -1,15 +1,18 @@
-import "./App.css";
-import Header from "./components/header/header";
-import Notes from "./components/notes/notes";
-import Side from "./components/side/side";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Home from "../pages/Home";
+import AboutUs from "../pages/AbouUs";
+import ContactUs from "../pages/ContactUs";
 
 function App() {
   return (
-    <div className="app-container">
-      <Header />
-      <Side />
-      <Notes />
-    </div>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+      </Routes>
+    </Layout>
   );
 }
 
