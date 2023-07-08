@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import "./notes.css";
+import { AppContext } from "../../AppContext";
 import Note from "../note/note";
 import EditNote from "../edit-note/editNote";
-import { AppContext } from "../../AppContext";
 import useAxios from "../../useAxios";
 import Modal from "../modal/modal";
+import "./notes.css";
 
 const Notes = () => {
-  const { editNote, setEditNote, noteId, setNoteId, notes, setNotes } =
+  const { editNote, setEditNote, setNote, notes, setNotes } =
     useContext(AppContext);
   const [url, setUrl] = useState(["get", "notes", null]);
-  const [response] = useAxios(url[0], url[1], url[2]);
+  const [response, , loading] = useAxios(url[0], url[1], url[2]);
   const { modal, setModal } = useContext(AppContext);
 
   useEffect(() => {
@@ -18,23 +18,38 @@ const Notes = () => {
       setNotes(response);
       console.log(response);
     } else {
-      hideModal();
+      handleShowModal();
     }
   }, [response]);
 
-  const deleteNote = () => {
-    let id = modal.object.id;
-    let object = { _id: id };
+  useEffect(() => {}, [loading]);
+
+  const content = () => {
+    return;
+  };
+
+  const handleDeleteNote = () => {
+    console.log(modal.object.id);
+    const object = { _id: modal.object.id };
     setUrl(["delete", "delete-note?", object]);
   };
 
-  const hideModal = () => {
+  const handleSaveNote = (note) => {
+    console.log(note);
+    setUrl(["post", "new-note?", note]);
+  };
+
+  const handleShowModal = () => {
     setModal({ show: false });
   };
 
   const handleNoteClick = (id) => {
+    notes.map((note) => {
+      if (note._id === id) {
+        setNote(note);
+      }
+    });
     setEditNote(true);
-    setNoteId(id);
   };
   const handleNotesList = () => {
     return notes?.map((note) => (
@@ -52,10 +67,14 @@ const Notes = () => {
   return (
     <div className="app-notes">
       {modal.show && (
-        <Modal modal={modal} onPositive={deleteNote} onNegative={hideModal} />
+        <Modal
+          modal={modal}
+          onPositive={handleDeleteNote}
+          onNegative={handleShowModal}
+        />
       )}
       {editNote ? (
-        <EditNote />
+        <EditNote onSaveNote={handleSaveNote} />
       ) : (
         <ul className="app-notes-list">{handleNotesList()}</ul>
       )}

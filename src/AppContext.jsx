@@ -4,7 +4,7 @@ const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [editNote, setEditNote] = useState(false);
-  const [noteId, setNoteId] = useState(null);
+  const [note, setNote] = useState(null);
   const [modal, setModal] = useState({
     show: false,
     title: "",
@@ -20,8 +20,8 @@ const AppProvider = ({ children }) => {
       value={{
         editNote,
         setEditNote,
-        noteId,
-        setNoteId,
+        note,
+        setNote,
         modal,
         setModal,
         notes,

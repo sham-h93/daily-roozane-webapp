@@ -1,78 +1,119 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AppContext } from "../../AppContext";
-import "./editNote.css";
-import useAxios from "../../useAxios";
-const EditNote = () => {
-  const [noteObj, setNoteObj] = useState({
-    title: "عنوان یادداشت",
-    description: "متن یادداشت",
-  });
-  const { setEditNote, setNoteId, noteId } = useContext(AppContext);
-  const [url, setUrl] = useState(["get", `note?_id=${noteId}`]);
-  console.log(url);
-  const [response] = useAxios(url[0], url[1], url[2]);
+import styles from "./EditNote.module.css";
+const EditNote = ({ onSaveNote }) => {
+  const titleText = useRef(null);
+  const descriptionText = useRef(null);
+  const [colorValue, setColorValue] = useState("aqua");
+  const { setEditNote, note, setNote } = useContext(AppContext);
 
-  useEffect(() => {
-    if (url[0] === "post") {
-      closeEditNoteComponent();
-    }
-    setNoteObj(response);
-  }, [response, url]);
+  const handleoteColor = (e) => {
+    setColorValue(e.target.value);
+  };
 
-  const handleTitleInputChange = (e) => {
-    setNoteObj({ ...noteObj, title: e.target.value });
-  };
-  const handleDescriptionInputChange = (e) => {
-    setNoteObj({ ...noteObj, description: e.target.value });
-  };
-  const closeEditNoteComponent = () => {
-    setNoteId(null);
+  const handleCloseEditNote = () => {
+    setNote(null);
     setEditNote(false);
   };
-  const handleSaveClick = () => {
-    setUrl(["post", "new-note?", noteObj]);
+  const handleSaveClick = (e) => {
+    e.preventDefault();
+    let newNote = {
+      _id: note ? note?._id : null,
+      title: titleText.current.value,
+      description: descriptionText.current.value,
+      color: colorValue,
+    };
+    onSaveNote(newNote);
   };
   return (
-    <div className="edit-note-container">
-      <form className="edit-note-form">
-        <input
-          type="text"
-          placeholder="عنوان یادداشت"
-          className="edit-note-title"
-          value={noteObj?.title}
-          onChange={(e) => handleTitleInputChange(e)}
-        />
-        <textarea
-          className="edit-note-description"
-          rows="10"
-          cols="50"
-          placeholder="یادداشت"
-          value={noteObj?.description}
-          onChange={(e) => handleDescriptionInputChange(e)}
-        ></textarea>
-        <fieldset className="edit-note-radio-fieldset">
-          <input type="radio" name="edit-note-color" id="lavendar" />
-          <input type="radio" name="edit-note-color" id="blue" />
-          <input type="radio" name="edit-note-color" id="aqua" />
-          <input type="radio" name="edit-note-color" id="green" />
-          <input type="radio" name="edit-note-color" id="yellow" />
-          <input type="radio" name="edit-note-color" id="orange" />
-        </fieldset>
-        <fieldset className="edit-note-button-fieldset">
-          <input type="button" className="edit-note-delete" value="حذف" />
+    <div className={styles.container}>
+      <form className={styles.form}>
+        <div className={styles.inputContainer}>
+          <label className={styles.label} htmlFor="title">
+            عنوان
+          </label>
           <input
-            type="button"
-            className="edit-note-cancel"
-            value="بی خیال"
-            onClick={closeEditNoteComponent}
+            className={styles.input}
+            id="title"
+            type="text"
+            rows="1"
+            defaultValue={note?.title || ""}
+            ref={titleText}
           />
-          <input
-            type="button"
-            className="edit-note-save"
-            value="ذخیره"
-            onClick={handleSaveClick}
-          />
-        </fieldset>
+        </div>
+        <div className={styles.inputContainer}>
+          <label className={styles.label} htmlFor="description">
+            متن یادداشت
+          </label>
+          <textarea
+            id="description"
+            className={styles.input}
+            rows="10"
+            defaultValue={note?.description || ""}
+            ref={descriptionText}
+          ></textarea>
+        </div>
+        <div className={styles.fieldsetsContainer}>
+          <fieldset className={styles.radiosFieldset}>
+            <input
+              type="radio"
+              name="edit-note-color"
+              value={"lavendar"}
+              onChange={handleoteColor}
+              id={styles.lavendar}
+            />
+            <input
+              type="radio"
+              name="edit-note-color"
+              value={"blue"}
+              onChange={handleoteColor}
+              id={styles.blue}
+            />
+            <input
+              type="radio"
+              name="edit-note-color"
+              value={"aqua"}
+              onChange={handleoteColor}
+              id={styles.aqua}
+            />
+            <input
+              type="radio"
+              name="edit-note-color"
+              value={"green"}
+              onChange={handleoteColor}
+              id={styles.green}
+            />
+            <input
+              type="radio"
+              name="edit-note-color"
+              value={"yellow"}
+              onChange={handleoteColor}
+              id={styles.yellow}
+            />
+            <input
+              type="radio"
+              name="edit-note-color"
+              value={"orange"}
+              onChange={handleoteColor}
+              id={styles.orange}
+            />
+          </fieldset>
+          <fieldset className={styles.btnFieldset}>
+            <button
+              className={styles.btn}
+              type="submit"
+              onClick={handleSaveClick}
+            >
+              حذف
+            </button>
+            <button className={styles.btn} onClick={handleCloseEditNote}>
+              بی خیال
+            </button>
+            <button className={styles.saveBtn} onClick={handleSaveClick}>
+              ذخیره
+            </button>
+          </fieldset>
+        </div>
       </form>
     </div>
   );

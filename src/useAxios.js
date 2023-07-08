@@ -3,13 +3,6 @@ import { useEffect, useState } from "react";
 
 const BASE_URL = "http://127.0.0.1:2000/api/";
 
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    "content-type": "application/json; charset=utf-8",
-  },
-});
-
 const useAxios = (method, url, data = null) => {
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState(null);
@@ -21,10 +14,10 @@ const useAxios = (method, url, data = null) => {
       const res = await axios({
         method: method,
         url: BASE_URL + url,
-        params: data,
-        headers: { "Content-Type": "application/json" },
+        headers: { "content-type": "application/json; charset=utf-8" },
+        data: data,
       });
-      console.log();
+      console.log(res);
       setResponse(res.data);
       setLoading(false);
     } catch (error) {
