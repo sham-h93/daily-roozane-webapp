@@ -17,8 +17,8 @@ const useAxios = (method, url, data = null) => {
         headers: { "content-type": "application/json; charset=utf-8" },
         data: data,
       });
-      console.log(res);
-      setResponse(res.data);
+      //console.log(res);
+      setResponse(res);
       setLoading(false);
     } catch (error) {
       setError(error.message);

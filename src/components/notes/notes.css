@@ -13,3 +13,19 @@
   padding-top: 16px;
   padding-inline: 16px;
 }
+
+.noNotes {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(192, 192, 192);
+}
+.roozaneIllstration {
+  width: 400px;
+}
+.noNoteMessage {
+  font-size: 40px;
+}

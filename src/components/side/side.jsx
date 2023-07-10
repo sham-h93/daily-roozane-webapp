@@ -10,7 +10,7 @@ const Side = () => {
     useContext(AppContext);
 
   // useEffect(() => {
-  //   setRequestUrl(["get", "notes?", { title: `${searchField}` }]);
+  //   setRequestUrl(["post", "find-notes?", { title: `${searchField}` }]);
   //   console.log(requestUrl);
   // }, [searchField]);
 
@@ -20,6 +20,7 @@ const Side = () => {
   // }, [requestUrl[2]]);
 
   const handleSearch = (e) => {
+    e.preventDefault();
     setSearchField(e.target.value);
   };
 

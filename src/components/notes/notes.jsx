@@ -5,38 +5,126 @@ import EditNote from "../edit-note/editNote";
 import useAxios from "../../useAxios";
 import Modal from "../modal/modal";
 import "./notes.css";
+import RoozaneIllustration from "../../assets/roozane-illustration.svg";
 
 const Notes = () => {
-  const { editNote, setEditNote, setNote, notes, setNotes } =
-    useContext(AppContext);
-  const [url, setUrl] = useState(["get", "notes", null]);
-  const [response, , loading] = useAxios(url[0], url[1], url[2]);
-  const { modal, setModal } = useContext(AppContext);
+  const {
+    editNote,
+    setEditNote,
+    setNote,
+    notes,
+    setNotes,
+    requestUrl,
+    setRequestUrl,
+    modal,
+    setModal,
+  } = useContext(AppContext);
+  const [statusMessage, setStatusMessage] = useState(null);
+  const [response, , loading] = useAxios(
+    requestUrl[0],
+    requestUrl[1],
+    requestUrl[2]
+  );
+
+  function setModalContent(message) {
+    if (message?.includes("added")) {
+      setEditNote(false);
+      addedModal(message);
+    } else if (message?.includes("updated")) {
+      //return updatedModal(message);
+    } else if (message?.includes("deleted")) {
+      //return deletedModal(message);
+    } else {
+      //return errorModal(message);
+    }
+  }
+
+  function addedModal(message) {
+    setModal({
+      show: true,
+      status: message,
+      message: "با موفقیت ذخیره شد",
+      negative: "بستن",
+    });
+  }
+
+  // function deletedModal(message) {
+  //   setModal({
+  //     show: true,
+  //     status: message,
+  //     message: "با موفقیت حذف شد",
+  //     negative: "بستن",
+  //   });
+  // }
+
+  // function updatedModal(message) {
+  //   setModal({
+  //     show: true,
+  //     status: message,
+  //     message: "با موفقیت ویرایش شد",
+  //   });
+  // }
+
+  // function errorModal(message) {
+  //   setModal({
+  //     show: true,
+  //     status: message,
+  //     message: "خطایی رخ داد",
+  //   });
+  // }
+
+  function noNotes() {
+    return (
+      <div className="noNotes">
+        <img
+          className="roozaneIllstration"
+          src={RoozaneIllustration}
+          alt="روزانه"
+        />
+        <h3 className="noNoteMessage">هنوز یادداشتی ندارید!</h3>
+      </div>
+    );
+  }
 
   useEffect(() => {
-    if (url[0] === "get") {
-      setNotes(response);
-      console.log(response);
-    } else {
-      handleShowModal();
+    console.log(response);
+    if (response) {
+      handleResponse();
     }
+    handleShowModal();
   }, [response]);
 
-  useEffect(() => {}, [loading]);
+  function handleResponse() {
+    switch (response.status) {
+      case 200: {
+        console.log(response);
+        setNotes(response.data);
+        break;
+      }
+      case 201: {
+        setModalContent(response.data.message);
+        updateNotes();
+        //setStatusMessage(response?.data.message);
+        break;
+      }
+      case (404, 500): {
+        setStatusMessage(response?.data.message);
+        break;
+      }
+    }
+  }
 
-  const content = () => {
-    return;
-  };
+  function updateNotes() {
+    setRequestUrl(["get", "notes", null]);
+  }
 
   const handleDeleteNote = () => {
-    console.log(modal.object.id);
     const object = { _id: modal.object.id };
-    setUrl(["delete", "delete-note?", object]);
+    setRequestUrl(["delete", "delete-note?", object]);
   };
 
   const handleSaveNote = (note) => {
-    console.log(note);
-    setUrl(["post", "new-note?", note]);
+    setRequestUrl(["post", "new-note?", note]);
   };
 
   const handleShowModal = () => {
@@ -51,6 +139,15 @@ const Notes = () => {
     });
     setEditNote(true);
   };
+
+  function homeContent() {
+    if (notes?.length > 0) {
+      return <ul className="app-notes-list">{handleNotesList()}</ul>;
+    } else {
+      return noNotes();
+    }
+  }
+
   const handleNotesList = () => {
     return notes?.map((note) => (
       <li key={note._id}>
@@ -73,11 +170,11 @@ const Notes = () => {
           onNegative={handleShowModal}
         />
       )}
-      {editNote ? (
-        <EditNote onSaveNote={handleSaveNote} />
-      ) : (
-        <ul className="app-notes-list">{handleNotesList()}</ul>
+      {loading && (
+        <Modal modal={{ isLoadingModal: true, title: "لطفا صبر کنید" }} />
       )}
+      {/* {statusMessage && setModalContent(statusMessage)} */}
+      {editNote ? <EditNote onSaveNote={handleSaveNote} /> : homeContent()}
     </div>
   );
 };

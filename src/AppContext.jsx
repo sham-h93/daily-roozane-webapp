@@ -7,13 +7,16 @@ const AppProvider = ({ children }) => {
   const [note, setNote] = useState(null);
   const [modal, setModal] = useState({
     show: false,
+    isLoadingModal: false,
+    message: "",
+    status: "",
     title: "",
     description: "",
     positive: "",
     negative: "",
   });
   const [notes, setNotes] = useState([]);
-  const [requestUrl, setRequestUrl] = useState(["get", "notes"]);
+  const [requestUrl, setRequestUrl] = useState(["get", "notes", null]);
 
   return (
     <AppContext.Provider

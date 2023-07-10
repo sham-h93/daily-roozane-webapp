@@ -1,5 +1,10 @@
+import spinner from "../src/assets/loading-spinner.svg";
 const ContactUs = () => {
-  return <div>Contact us</div>;
+  return (
+    <div>
+      <img src={spinner} alt="" />
+    </div>
+  );
 };
 
 export default ContactUs;

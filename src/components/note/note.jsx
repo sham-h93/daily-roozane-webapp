@@ -4,11 +4,14 @@ import { formatdate } from "../../utils";
 import { useContext } from "react";
 import { AppContext } from "../../AppContext";
 const Note = ({ onNoteClick, note }) => {
-  const { modal, setModal } = useContext(AppContext);
+  const { setModal } = useContext(AppContext);
 
   const handleDeleteNote = () => {
     setModal({
       show: true,
+      isLoadingModal: false,
+      message: "",
+      status: "",
       title: "Delete Note",
       description: "Do you really want to delete this note?",
       positive: "Yes",

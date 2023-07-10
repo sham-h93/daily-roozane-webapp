@@ -19,6 +19,8 @@
   --highlight-color: #dcf3f5;
   --side-highlight-color: #dcf3f526;
   --dark-color: #101010;
+  --text-color: #383838;
+  --text-secondary-color: #7b7b7b;
   --lavendar-color: #ba98ed;
   --blue-color: #88b5e8;
   --aqua-color: #a6dfd7;
@@ -29,6 +31,7 @@
 
 * {
   box-sizing: border-box;
+  position: relative;
 }
 
 body {
