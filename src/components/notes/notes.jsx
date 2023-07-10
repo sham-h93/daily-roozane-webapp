@@ -33,6 +33,9 @@ const Notes = () => {
     } else if (message?.includes("updated")) {
       //return updatedModal(message);
     } else if (message?.includes("deleted")) {
+      if (editNote) {
+        setEditNote(false);
+      }
       //return deletedModal(message);
     } else {
       //return errorModal(message);
@@ -149,16 +152,18 @@ const Notes = () => {
   }
 
   const handleNotesList = () => {
-    return notes?.map((note) => (
-      <li key={note._id}>
-        <Note
-          note={note}
-          onNoteClick={() => {
-            handleNoteClick(note._id);
-          }}
-        />
-      </li>
-    ));
+    if (notes != null) {
+      return notes.map((note) => (
+        <li key={note._id}>
+          <Note
+            note={note}
+            onNoteClick={() => {
+              handleNoteClick(note._id);
+            }}
+          />
+        </li>
+      ));
+    }
   };
 
   return (
@@ -174,7 +179,11 @@ const Notes = () => {
         <Modal modal={{ isLoadingModal: true, title: "لطفا صبر کنید" }} />
       )}
       {/* {statusMessage && setModalContent(statusMessage)} */}
-      {editNote ? <EditNote onSaveNote={handleSaveNote} /> : homeContent()}
+      {editNote ? (
+        <EditNote onSaveNote={handleSaveNote} onDeleteNote={handleDeleteNote} />
+      ) : (
+        homeContent()
+      )}
     </div>
   );
 };

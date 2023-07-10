@@ -5,7 +5,7 @@ const EditNote = ({ onSaveNote }) => {
   const titleText = useRef(null);
   const descriptionText = useRef(null);
   const [colorValue, setColorValue] = useState("aqua");
-  const { setEditNote, note, setNote } = useContext(AppContext);
+  const { setEditNote, note, setNote, setModal } = useContext(AppContext);
 
   const handleoteColor = (e) => {
     setColorValue(e.target.value);
@@ -15,6 +15,7 @@ const EditNote = ({ onSaveNote }) => {
     setNote(null);
     setEditNote(false);
   };
+
   const handleSaveClick = (e) => {
     e.preventDefault();
     let newNote = {
@@ -25,6 +26,44 @@ const EditNote = ({ onSaveNote }) => {
     };
     onSaveNote(newNote);
   };
+
+  const handleDeleteNote = (e) => {
+    e.preventDefault();
+    setModal({
+      show: true,
+      isLoadingModal: false,
+      message: "",
+      status: "",
+      title: "Delete Note",
+      description: "Do you really want to delete this note?",
+      positive: "Yes",
+      negative: "No",
+      object: { id: note._id },
+    });
+  };
+
+  const handlebuttons = () => {
+    return (
+      <>
+        {note !== null && (
+          <button
+            type="submit"
+            className={styles.btn}
+            onClick={handleDeleteNote}
+          >
+            حذف
+          </button>
+        )}
+        <button className={styles.btn} onClick={handleCloseEditNote}>
+          بی خیال
+        </button>
+        <button className={styles.saveBtn} onClick={handleSaveClick}>
+          ذخیره
+        </button>
+      </>
+    );
+  };
+
   return (
     <div className={styles.container}>
       <form className={styles.form}>
@@ -98,21 +137,7 @@ const EditNote = ({ onSaveNote }) => {
               id={styles.orange}
             />
           </fieldset>
-          <fieldset className={styles.btnFieldset}>
-            <button
-              className={styles.btn}
-              type="submit"
-              onClick={handleSaveClick}
-            >
-              حذف
-            </button>
-            <button className={styles.btn} onClick={handleCloseEditNote}>
-              بی خیال
-            </button>
-            <button className={styles.saveBtn} onClick={handleSaveClick}>
-              ذخیره
-            </button>
-          </fieldset>
+          <fieldset className={styles.btnFieldset}>{handlebuttons()}</fieldset>
         </div>
       </form>
     </div>
