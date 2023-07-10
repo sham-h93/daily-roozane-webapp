@@ -34,10 +34,10 @@ const EditNote = ({ onSaveNote }) => {
       isLoadingModal: false,
       message: "",
       status: "",
-      title: "Delete Note",
-      description: "Do you really want to delete this note?",
-      positive: "Yes",
-      negative: "No",
+      title: "حذف یادداشت",
+      description: "آیا مطمئنید که میخواهید این یادداشت را حذف کنید؟",
+      positive: "بله",
+      negative: "بی خیال",
       object: { id: note._id },
     });
   };

@@ -2,17 +2,19 @@ import { useState, useContext, useEffect } from "react";
 import { MdSearch, MdEditNote } from "react-icons/md";
 import "./side.css";
 import { AppContext } from "../../AppContext";
-import useAxios from "../../useAxios";
 
 const Side = () => {
   const [searchField, setSearchField] = useState("");
   const { setEditNote, setNotes, requestUrl, setRequestUrl } =
     useContext(AppContext);
 
-  // useEffect(() => {
-  //   setRequestUrl(["post", "find-notes?", { title: `${searchField}` }]);
-  //   console.log(requestUrl);
-  // }, [searchField]);
+  useEffect(() => {
+    if (searchField === "") {
+      setRequestUrl(["get", "notes", null]);
+    } else {
+      setRequestUrl(["post", "find-notes?", { title: `${searchField}` }]);
+    }
+  }, [searchField]);
 
   // useEffect(() => {
   //   //setNotes(response);
@@ -37,7 +39,6 @@ const Side = () => {
           type="search"
           placeholder="جستجوی یادداشت"
           onChange={handleSearch}
-          value={searchField}
         />
       </form>
 

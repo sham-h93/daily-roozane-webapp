@@ -26,6 +26,14 @@ const Notes = () => {
     requestUrl[2]
   );
 
+  useEffect(() => {
+    console.log(response);
+    if (response) {
+      handleResponse();
+    }
+    handleShowModal();
+  }, [response]);
+
   function setModalContent(message) {
     if (message?.includes("added")) {
       setEditNote(false);
@@ -36,6 +44,8 @@ const Notes = () => {
       if (editNote) {
         setEditNote(false);
       }
+      //return deletedModal(message);
+    } else if (message?.includes("not found")) {
       //return deletedModal(message);
     } else {
       //return errorModal(message);
@@ -84,18 +94,10 @@ const Notes = () => {
           src={RoozaneIllustration}
           alt="روزانه"
         />
-        <h3 className="noNoteMessage">هنوز یادداشتی ندارید!</h3>
+        <h3 className="noNoteMessage">یادداشتی یافت نشد</h3>
       </div>
     );
   }
-
-  useEffect(() => {
-    console.log(response);
-    if (response) {
-      handleResponse();
-    }
-    handleShowModal();
-  }, [response]);
 
   function handleResponse() {
     switch (response.status) {
@@ -111,7 +113,8 @@ const Notes = () => {
         break;
       }
       case (404, 500): {
-        setStatusMessage(response?.data.message);
+        console.log(response);
+        //setStatusMessage(response?.data.message);
         break;
       }
     }
