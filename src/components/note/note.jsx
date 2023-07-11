@@ -1,10 +1,48 @@
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import "./note.css";
 import { formatdate } from "../../utils";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AppContext } from "../../AppContext";
+import { useEffect } from "react";
 const Note = ({ onNoteClick, note }) => {
+  const divRef = useRef("#0EBCCE");
   const { setModal } = useContext(AppContext);
+
+  useEffect(() => {
+    setColor();
+  }, [divRef.current]);
+
+  const handleNoteColor = () => {
+    let noteColor;
+    switch (note.color) {
+      case "lavendar":
+        noteColor = "#BA98ED";
+        break;
+      case "aqua":
+        noteColor = "#A6DFD7";
+        break;
+      case "blue":
+        noteColor = "#88B5E8";
+        break;
+      case "green":
+        noteColor = "#9CF29C";
+        break;
+      case "yellow":
+        noteColor = "#F1EA8B";
+        break;
+      case "orange":
+        noteColor = "#FAC896";
+        break;
+      default:
+        noteColor = "#0EBCCE";
+        break;
+    }
+    return noteColor;
+  };
+
+  const setColor = () => {
+    divRef.current.style.backgroundColor = handleNoteColor();
+  };
 
   const handleDeleteNote = () => {
     setModal({
@@ -22,7 +60,7 @@ const Note = ({ onNoteClick, note }) => {
 
   return (
     <div className="note-container">
-      <div className="note-color-div"></div>
+      <div className="note-color-div" ref={divRef}></div>
       <a className="note-title" onClick={onNoteClick}>
         {note.title}
       </a>

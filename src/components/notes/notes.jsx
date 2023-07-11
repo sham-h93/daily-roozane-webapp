@@ -37,7 +37,6 @@ const Notes = () => {
   function setModalContent(message) {
     if (message?.includes("added")) {
       setEditNote(false);
-      addedModal(message);
     } else if (message?.includes("updated")) {
       //return updatedModal(message);
     } else if (message?.includes("deleted")) {
@@ -52,14 +51,14 @@ const Notes = () => {
     }
   }
 
-  function addedModal(message) {
-    setModal({
-      show: true,
-      status: message,
-      message: "با موفقیت ذخیره شد",
-      negative: "بستن",
-    });
-  }
+  // function addedModal(message) {
+  //   setModal({
+  //     show: true,
+  //     status: message,
+  //     message: "با موفقیت ذخیره شد",
+  //     negative: "بستن",
+  //   });
+  // }
 
   // function deletedModal(message) {
   //   setModal({
@@ -109,12 +108,10 @@ const Notes = () => {
       case 201: {
         setModalContent(response.data.message);
         updateNotes();
-        //setStatusMessage(response?.data.message);
         break;
       }
       case (404, 500): {
         console.log(response);
-        //setStatusMessage(response?.data.message);
         break;
       }
     }
@@ -181,7 +178,6 @@ const Notes = () => {
       {loading && (
         <Modal modal={{ isLoadingModal: true, title: "لطفا صبر کنید" }} />
       )}
-      {/* {statusMessage && setModalContent(statusMessage)} */}
       {editNote ? (
         <EditNote onSaveNote={handleSaveNote} onDeleteNote={handleDeleteNote} />
       ) : (
