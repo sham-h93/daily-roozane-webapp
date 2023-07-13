@@ -19,9 +19,7 @@ const Header = () => {
             <Link to="/contact-us">تماس با ما</Link>
           </li>
           <li>
-            <a id="header-download-btn" href="">
-              دانلود از کافه بازار
-            </a>
+            <Link to="/signup">ورود/ثبت نام</Link>
           </li>
         </ul>
       </nav>

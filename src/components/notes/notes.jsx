@@ -18,8 +18,8 @@ const Notes = () => {
     setRequestUrl,
     modal,
     setModal,
+    loggedIn,
   } = useContext(AppContext);
-  const [statusMessage, setStatusMessage] = useState(null);
   const [response, , loading] = useAxios(
     requestUrl[0],
     requestUrl[1],
@@ -27,17 +27,19 @@ const Notes = () => {
   );
 
   useEffect(() => {
-    console.log(response);
+    console.log("notes=" + response);
     if (response) {
       handleResponse();
     }
+
     handleShowModal();
-  }, [response]);
+  }, [response, loggedIn]);
 
   function setModalContent(message) {
     if (message?.includes("added")) {
       setEditNote(false);
     } else if (message?.includes("updated")) {
+      setEditNote(false);
       //return updatedModal(message);
     } else if (message?.includes("deleted")) {
       if (editNote) {
@@ -50,40 +52,6 @@ const Notes = () => {
       //return errorModal(message);
     }
   }
-
-  // function addedModal(message) {
-  //   setModal({
-  //     show: true,
-  //     status: message,
-  //     message: "با موفقیت ذخیره شد",
-  //     negative: "بستن",
-  //   });
-  // }
-
-  // function deletedModal(message) {
-  //   setModal({
-  //     show: true,
-  //     status: message,
-  //     message: "با موفقیت حذف شد",
-  //     negative: "بستن",
-  //   });
-  // }
-
-  // function updatedModal(message) {
-  //   setModal({
-  //     show: true,
-  //     status: message,
-  //     message: "با موفقیت ویرایش شد",
-  //   });
-  // }
-
-  // function errorModal(message) {
-  //   setModal({
-  //     show: true,
-  //     status: message,
-  //     message: "خطایی رخ داد",
-  //   });
-  // }
 
   function noNotes() {
     return (
@@ -110,6 +78,9 @@ const Notes = () => {
         updateNotes();
         break;
       }
+      case 409: {
+        break;
+      }
       case (404, 500): {
         console.log(response);
         break;
@@ -118,16 +89,17 @@ const Notes = () => {
   }
 
   function updateNotes() {
-    setRequestUrl(["get", "notes", null]);
+    setRequestUrl(["get", "api/notes", null]);
+    setNotes(response.data);
   }
 
   const handleDeleteNote = () => {
     const object = { _id: modal.object.id };
-    setRequestUrl(["delete", "delete-note?", object]);
+    setRequestUrl(["delete", "api/delete-note?", object]);
   };
 
   const handleSaveNote = (note) => {
-    setRequestUrl(["post", "new-note?", note]);
+    setRequestUrl(["post", "api/new-note?", note]);
   };
 
   const handleShowModal = () => {

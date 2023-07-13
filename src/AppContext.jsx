@@ -16,7 +16,8 @@ const AppProvider = ({ children }) => {
     negative: "",
   });
   const [notes, setNotes] = useState([]);
-  const [requestUrl, setRequestUrl] = useState(["get", "notes", null]);
+  const [requestUrl, setRequestUrl] = useState(["get", "api/notes", null]);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <AppContext.Provider
@@ -31,6 +32,8 @@ const AppProvider = ({ children }) => {
         setNotes,
         requestUrl,
         setRequestUrl,
+        loggedIn,
+        setLoggedIn,
       }}
     >
       {children}

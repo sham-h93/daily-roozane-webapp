@@ -1,14 +1,35 @@
 import classes from "./Home.module.css";
 import Side from "../src/components/side/side";
 import Notes from "../src/components/notes/notes";
+import Registration from "./Signup";
+import { useContext, useState } from "react";
+import { AppContext } from "../src/AppContext";
 
 const Home = () => {
-  return (
-    <div className={classes.container}>
-      <Side />
-      <Notes />
-    </div>
-  );
+  const { loggedIn, setLoggedIn } = useContext(AppContext);
+  useState(() => {
+    if (localStorage.getItem("token")) {
+      setLoggedIn(true);
+    }
+    if (loggedIn) {
+      setLoggedIn(true);
+    }
+  }, [loggedIn]);
+
+  function homeContent() {
+    if (loggedIn) {
+      return (
+        <>
+          <Side />
+          <Notes />
+        </>
+      );
+    } else {
+      return <Registration />;
+    }
+  }
+
+  return <div className={classes.container}>{homeContent()}</div>;
 };
 
 export default Home;

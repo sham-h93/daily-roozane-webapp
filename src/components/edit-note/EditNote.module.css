@@ -25,6 +25,21 @@
   color: #555;
   margin-bottom: 8px;
 }
+.date {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  align-items: center;
+  bottom: 16px;
+  right: 32px;
+  color: #aeaeae;
+  background-color: white;
+  padding: 8px;
+  border-radius: 60px;
+}
+.date span {
+  margin-right: 8px;
+}
 .input {
   font-family: yekan;
   grid-column: 1 / span 4;

@@ -1,6 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { AppContext } from "../../AppContext";
 import styles from "./EditNote.module.css";
+import { formatdate } from "../../utils";
 const EditNote = ({ onSaveNote }) => {
   const titleText = useRef(null);
   const descriptionText = useRef(null);
@@ -140,6 +141,10 @@ const EditNote = ({ onSaveNote }) => {
           <fieldset className={styles.btnFieldset}>{handlebuttons()}</fieldset>
         </div>
       </form>
+      <a className={styles.date}>
+        ایجاد: {formatdate(note?.createdDate)}
+        <span>ویرایش: {formatdate(note?.modifiedDate)}</span>
+      </a>
     </div>
   );
 };
