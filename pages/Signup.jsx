@@ -65,18 +65,16 @@ const Registration = () => {
       }
     }
     handleRegistrationText();
-    console.log(registerText);
   }, [signup, response]);
 
   function handleSuccessLogin(res) {
+    console.log("" + res.token);
     if (res) {
       localStorage.setItem("token", res.token);
       setLoggedIn(true);
     }
   }
   function handleUserSuccessRegisteration(res) {
-    console.log("handleUserSuccessRegisteration   " + res.user);
-
     if (res) {
       localStorage.setItem("user", res.user);
       setSignup(false);
@@ -107,7 +105,7 @@ const Registration = () => {
       password: params.password,
     };
 
-    console.log(signup);
+    console.log(user);
     setRequestUrl(["post", `auth/${signup ? "register" : "login"}`, user]);
   }
 
@@ -170,6 +168,7 @@ const Registration = () => {
           <input
             type="email"
             id="email"
+            placeholder="حسین اصل"
             value={user && user.email}
             ref={email}
             {...register("email", { required: true })}
@@ -181,6 +180,7 @@ const Registration = () => {
           <input
             type="password"
             id="password"
+            placeholder="example@example.com"
             value={user && user.password}
             ref={password}
             {...register("password", { required: true, minLength: 8 })}
@@ -199,6 +199,7 @@ const Registration = () => {
           <button type="submit" className={styles.btn}>
             {registerText.submitText}
           </button>
+          {/* {loading && <img className={styles.spinner} src={Spinner} />} */}
         </form>
         <span className={styles.text}>
           {registerText.span}

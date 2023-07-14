@@ -8,8 +8,8 @@ const useAxios = (method, url, data = null) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState("");
   const fetchData = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const res = await axios({
         method: method,
         url: BASE_URL + url,
@@ -19,7 +19,7 @@ const useAxios = (method, url, data = null) => {
         },
         data: data,
       });
-      //console.log(res);
+      console.log(res);
       setResponse(res);
       setLoading(false);
     } catch (error) {

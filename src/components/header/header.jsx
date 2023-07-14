@@ -1,7 +1,18 @@
 import "./header.css";
 import dailyLogo from "../../assets/daily-logo.svg";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../AppContext";
 const Header = () => {
+  const { loggedIn, setLoggedIn } = useContext(AppContext);
+
+  function handleLogout() {
+    if (loggedIn) {
+      localStorage.removeItem("token");
+      setLoggedIn(false);
+    }
+  }
+
   return (
     <header className="app-header">
       <div className="header-logo-container">
@@ -18,9 +29,11 @@ const Header = () => {
           <li>
             <Link to="/contact-us">تماس با ما</Link>
           </li>
-          <li>
-            <Link to="/signup">ورود/ثبت نام</Link>
-          </li>
+          {loggedIn && (
+            <li>
+              <a onClick={handleLogout}>خروج</a>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
