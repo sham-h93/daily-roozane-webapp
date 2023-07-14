@@ -19,6 +19,8 @@ const Notes = () => {
     modal,
     setModal,
     loggedIn,
+    isLoading,
+    setIsLoading,
   } = useContext(AppContext);
   const [response, , loading] = useAxios(
     requestUrl[0],
@@ -32,8 +34,9 @@ const Notes = () => {
       handleResponse();
     }
 
+    loading ? setIsLoading(true) : setIsLoading(false);
     handleShowModal();
-  }, [response, loggedIn]);
+  }, [response, loggedIn, loading]);
 
   function setModalContent(message) {
     if (message?.includes("added")) {
@@ -147,9 +150,9 @@ const Notes = () => {
           onNegative={handleShowModal}
         />
       )}
-      {loading && (
+      {/* {loading && (
         <Modal modal={{ isLoadingModal: true, title: "لطفا صبر کنید" }} />
-      )}
+      )} */}
       {editNote ? (
         <EditNote onSaveNote={handleSaveNote} onDeleteNote={handleDeleteNote} />
       ) : (

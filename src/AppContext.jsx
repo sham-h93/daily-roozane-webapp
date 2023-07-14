@@ -16,6 +16,7 @@ const AppProvider = ({ children }) => {
     negative: "",
   });
   const [notes, setNotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [requestUrl, setRequestUrl] = useState(["get", "api/notes", null]);
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -32,6 +33,8 @@ const AppProvider = ({ children }) => {
         setNotes,
         requestUrl,
         setRequestUrl,
+        isLoading,
+        setIsLoading,
         loggedIn,
         setLoggedIn,
       }}

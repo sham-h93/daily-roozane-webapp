@@ -4,7 +4,6 @@ import Layout from "./components/layout/Layout";
 import Home from "../pages/Home";
 import AboutUs from "../pages/AbouUs";
 import ContactUs from "../pages/ContactUs";
-
 function App() {
   return (
     <Layout>

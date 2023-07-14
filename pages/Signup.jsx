@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DailyLogo from "../src/assets/daily-logo.svg";
 import styles from "./SignUp.module.css";
 import useAxios from "../src/useAxios";
@@ -7,27 +7,18 @@ import { useForm } from "react-hook-form";
 
 const Registration = () => {
   const [signup, setSignup] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [registerText, setRegisterText] = useState({
     span: "حسابی ندارید؟",
     a: "ثبت نام کنید",
     submitText: "ورود",
   });
-  const username = useRef(null);
-  const email = useRef(null);
-  const password = useRef(null);
-  const confirmPassword = useRef(null);
   const { requestUrl, setRequestUrl, setLoggedIn } = useContext(AppContext);
-  const [response, , loading] = useAxios(
-    requestUrl[0],
-    requestUrl[1],
-    requestUrl[2]
-  );
+  const [response, ,] = useAxios(requestUrl[0], requestUrl[1], requestUrl[2]);
 
   const {
     register,
     handleSubmit,
-    watch,
     getValues,
     formState: { errors },
   } = useForm();
@@ -68,10 +59,10 @@ const Registration = () => {
   }, [signup, response]);
 
   function handleSuccessLogin(res) {
-    console.log("" + res.token);
     if (res) {
       localStorage.setItem("token", res.token);
       setLoggedIn(true);
+      setRequestUrl(["get", "api/notes", null]);
     }
   }
   function handleUserSuccessRegisteration(res) {
@@ -121,7 +112,6 @@ const Registration = () => {
             type="text"
             id="username"
             placeholder="حسین اصل"
-            ref={username}
             {...register("username", { minLength: 3 })}
           />
           <label htmlFor="email">ایمیل</label>{" "}
@@ -132,7 +122,6 @@ const Registration = () => {
             type="email"
             id="email"
             placeholder="example@example.com"
-            ref={email}
             {...register("email", { required: true })}
           />
           <label htmlFor="password">گذرواژه </label>{" "}
@@ -142,7 +131,6 @@ const Registration = () => {
           <input
             type="password"
             id="password"
-            ref={password}
             {...register("password", { required: true, minLength: 8 })}
           />
           <label htmlFor="confirmPassword">تکرار گذرواژه</label>{" "}
@@ -153,7 +141,6 @@ const Registration = () => {
             type="password"
             placeholder="حداقل 8 کاراکتر باشد"
             id="confirmPassword"
-            ref={confirmPassword}
             {...register("confirmPassword", { required: true, minLength: 8 })}
           />
         </>
@@ -169,8 +156,7 @@ const Registration = () => {
             type="email"
             id="email"
             placeholder="حسین اصل"
-            value={user && user.email}
-            ref={email}
+            value={user && user?.email}
             {...register("email", { required: true })}
           />
           <label htmlFor="password">گذرواژه </label>{" "}
@@ -182,7 +168,6 @@ const Registration = () => {
             id="password"
             placeholder="example@example.com"
             value={user && user.password}
-            ref={password}
             {...register("password", { required: true, minLength: 8 })}
           />
         </>
