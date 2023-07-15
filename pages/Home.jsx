@@ -18,8 +18,8 @@ const Home = () => {
     if (loggedIn) {
       return (
         <>
-          <Side />
-          <Notes />
+          {/* <Side />
+          <Notes /> */}
         </>
       );
     } else {

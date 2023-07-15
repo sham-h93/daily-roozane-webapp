@@ -6,6 +6,7 @@ import useAxios from "../../useAxios";
 import Modal from "../modal/modal";
 import "./notes.css";
 import RoozaneIllustration from "../../assets/roozane-illustration.svg";
+import useAxiosFunction from "../../hooks/useAxiosFunction";
 
 const Notes = () => {
   const {
@@ -22,21 +23,29 @@ const Notes = () => {
     isLoading,
     setIsLoading,
   } = useContext(AppContext);
-  const [response, , loading] = useAxios(
-    requestUrl[0],
-    requestUrl[1],
-    requestUrl[2]
-  );
+  const [response, error, loading, fetchData] = useAxiosFunction();
+  // const [response, , loading] = useAxios(
+  //   requestUrl[0],
+  //   requestUrl[1],
+  //   requestUrl[2]
+  // );
+
+  const getNotes = () => {
+    fetchData(["get", "api/notes", null]);
+  };
 
   useEffect(() => {
-    console.log("notes=" + response);
-    if (response) {
-      handleResponse();
-    }
+    getNotes();
+  }, []);
 
-    loading ? setIsLoading(true) : setIsLoading(false);
-    handleShowModal();
-  }, [response, loggedIn, loading]);
+  // useEffect(() => {
+  //   console.log("notes=" + response);
+  //   if (response) {
+  //     handleResponse();
+  //   }
+  //   loading ? setIsLoading(true) : setIsLoading(false);
+  //   handleShowModal();
+  // }, [response, loggedIn, loading]);
 
   function setModalContent(message) {
     if (message?.includes("added")) {

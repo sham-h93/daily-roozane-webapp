@@ -4,6 +4,7 @@ import styles from "./SignUp.module.css";
 import useAxios from "../src/useAxios";
 import { AppContext } from "../src/AppContext";
 import { useForm } from "react-hook-form";
+import useAxiosFunction from "../src/hooks/useAxiosFunction";
 
 const Registration = () => {
   const [signup, setSignup] = useState(false);
@@ -13,8 +14,11 @@ const Registration = () => {
     a: "ثبت نام کنید",
     submitText: "ورود",
   });
+
+  const [response, error, loading, fetchData] = useAxiosFunction();
+
   const { requestUrl, setRequestUrl, setLoggedIn } = useContext(AppContext);
-  const [response, ,] = useAxios(requestUrl[0], requestUrl[1], requestUrl[2]);
+  // const [response, ,] = useAxios(requestUrl[0], requestUrl[1], requestUrl[2]);
 
   const {
     register,
@@ -29,6 +33,7 @@ const Registration = () => {
 
   useEffect(() => {
     if (response) {
+      console.log(response);
       switch (response.status) {
         case 200: {
           handleSuccessLogin(response.data);
@@ -62,7 +67,7 @@ const Registration = () => {
     if (res) {
       localStorage.setItem("token", res.token);
       setLoggedIn(true);
-      setRequestUrl(["get", "api/notes", null]);
+      //setRequestUrl(["get", "api/notes", null]);
     }
   }
   function handleUserSuccessRegisteration(res) {
@@ -97,7 +102,11 @@ const Registration = () => {
     };
 
     console.log(user);
-    setRequestUrl(["post", `auth/${signup ? "register" : "login"}`, user]);
+    fetchData({
+      method: "post",
+      url: `auth/${signup ? "register" : "login"}`,
+      data: user,
+    });
   }
 
   function handleForm() {
