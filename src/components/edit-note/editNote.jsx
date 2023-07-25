@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { AppContext } from "../../AppContext";
 import styles from "./EditNote.module.css";
 import { formatdate } from "../../utils";
+
 const EditNote = ({ onSaveNote }) => {
   const titleText = useRef(null);
   const descriptionText = useRef(null);

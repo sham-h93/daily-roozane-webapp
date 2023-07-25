@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../../AppContext";
 import Note from "../note/note";
 import EditNote from "../edit-note/editNote";
-import useAxios from "../../useAxios";
 import Modal from "../modal/modal";
 import "./notes.css";
 import RoozaneIllustration from "../../assets/roozane-illustration.svg";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
+import { useCallback } from "react";
 
 const Notes = () => {
   const {
@@ -15,103 +15,73 @@ const Notes = () => {
     setNote,
     notes,
     setNotes,
-    requestUrl,
-    setRequestUrl,
+    requestConfig,
+    setRequestConfig,
     modal,
     setModal,
-    loggedIn,
-    isLoading,
-    setIsLoading,
   } = useContext(AppContext);
   const [response, error, loading, fetchData] = useAxiosFunction();
-  // const [response, , loading] = useAxios(
-  //   requestUrl[0],
-  //   requestUrl[1],
-  //   requestUrl[2]
-  // );
 
-  const getNotes = () => {
-    fetchData(["get", "api/notes", null]);
-  };
+  const fetch = useCallback(() => {
+    fetchData(requestConfig);
+  }, [requestConfig]);
 
   useEffect(() => {
-    getNotes();
-  }, []);
+    fetch();
+  }, [requestConfig]);
 
-  // useEffect(() => {
-  //   console.log("notes=" + response);
-  //   if (response) {
-  //     handleResponse();
-  //   }
-  //   loading ? setIsLoading(true) : setIsLoading(false);
-  //   handleShowModal();
-  // }, [response, loggedIn, loading]);
+  useEffect(() => {
+    if (response && response.data) {
+      switch (response.status) {
+        case 200: {
+          console.log(response);
+          setNotes(response.data);
+          break;
+        }
+        case 201: {
+          setModalContent(response.data.message);
+          updateNotes();
+          break;
+        }
+        case 409: {
+          break;
+        }
+        case (404, 500): {
+          console.log(response);
+          break;
+        }
+      }
+    }
+  }, [response]);
 
   function setModalContent(message) {
     if (message?.includes("added")) {
       setEditNote(false);
     } else if (message?.includes("updated")) {
       setEditNote(false);
-      //return updatedModal(message);
     } else if (message?.includes("deleted")) {
       if (editNote) {
         setEditNote(false);
-      }
-      //return deletedModal(message);
-    } else if (message?.includes("not found")) {
-      //return deletedModal(message);
-    } else {
-      //return errorModal(message);
-    }
-  }
-
-  function noNotes() {
-    return (
-      <div className="noNotes">
-        <img
-          className="roozaneIllstration"
-          src={RoozaneIllustration}
-          alt="روزانه"
-        />
-        <h3 className="noNoteMessage">یادداشتی یافت نشد</h3>
-      </div>
-    );
-  }
-
-  function handleResponse() {
-    switch (response.status) {
-      case 200: {
-        console.log(response);
-        setNotes(response.data);
-        break;
-      }
-      case 201: {
-        setModalContent(response.data.message);
-        updateNotes();
-        break;
-      }
-      case 409: {
-        break;
-      }
-      case (404, 500): {
-        console.log(response);
-        break;
       }
     }
   }
 
   function updateNotes() {
-    setRequestUrl(["get", "api/notes", null]);
+    setRequestConfig({ method: "get", url: "api/notes" });
     setNotes(response.data);
   }
 
   const handleDeleteNote = () => {
     const object = { _id: modal.object.id };
-    setRequestUrl(["delete", "api/delete-note?", object]);
+    setRequestConfig({
+      method: "delete",
+      url: "api/delete-note?",
+      data: object,
+    });
   };
 
   const handleSaveNote = (note) => {
-    setRequestUrl(["post", "api/new-note?", note]);
+    setRequestConfig({ method: "post", url: "api/new-note?", data: note });
   };
 
   const handleShowModal = () => {
@@ -128,26 +98,59 @@ const Notes = () => {
   };
 
   function homeContent() {
+    if (loading) showLoading();
+    if (error) showError();
     if (notes?.length > 0) {
-      return <ul className="app-notes-list">{handleNotesList()}</ul>;
+      return handleNotesList();
     } else {
       return noNotes();
     }
   }
 
+  function noNotes() {
+    return (
+      <div className="noNotes">
+        <img
+          className="roozaneIllstration"
+          src={RoozaneIllustration}
+          alt="روزانه"
+        />
+        <h3 className="noNoteMessage">یادداشتی یافت نشد</h3>
+      </div>
+    );
+  }
+
+  function showLoading() {
+    return <Modal modal={{ isLoadingModal: true, title: "لطفا صبر کنید" }} />;
+  }
+
+  function showError() {
+    return (
+      <Modal
+        modal={{
+          isLoadingModal: true,
+          status: "error",
+          title: "خطایی رخ داده است",
+        }}
+      />
+    );
+  }
+
   const handleNotesList = () => {
-    if (notes != null) {
-      return notes.map((note) => (
-        <li key={note._id}>
-          <Note
-            note={note}
-            onNoteClick={() => {
-              handleNoteClick(note._id);
-            }}
-          />
-        </li>
-      ));
-    }
+    return (
+      <ul className="app-notes-list">
+        {notes.map((note) => (
+          <li key={note._id}>
+            <Note
+              note={note}
+              onNoteClick={() => {
+                handleNoteClick(note._id);
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   return (
@@ -159,9 +162,6 @@ const Notes = () => {
           onNegative={handleShowModal}
         />
       )}
-      {/* {loading && (
-        <Modal modal={{ isLoadingModal: true, title: "لطفا صبر کنید" }} />
-      )} */}
       {editNote ? (
         <EditNote onSaveNote={handleSaveNote} onDeleteNote={handleDeleteNote} />
       ) : (

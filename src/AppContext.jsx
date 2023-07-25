@@ -17,7 +17,10 @@ const AppProvider = ({ children }) => {
   });
   const [notes, setNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [requestUrl, setRequestUrl] = useState(["get", "api/notes", null]);
+  const [requestConfig, setRequestConfig] = useState({
+    method: "GET",
+    url: "api/notes",
+  });
   const [loggedIn, setLoggedIn] = useState(false);
 
   return (
@@ -31,8 +34,8 @@ const AppProvider = ({ children }) => {
         setModal,
         notes,
         setNotes,
-        requestUrl,
-        setRequestUrl,
+        requestConfig,
+        setRequestConfig,
         isLoading,
         setIsLoading,
         loggedIn,

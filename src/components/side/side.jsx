@@ -1,25 +1,23 @@
 import { useState, useContext, useEffect } from "react";
 import { MdSearch, MdEditNote } from "react-icons/md";
-import "./side.css";
 import { AppContext } from "../../AppContext";
+import "./side.css";
 
 const Side = () => {
   const [searchField, setSearchField] = useState("");
-  const { setEditNote, setNotes, requestUrl, setRequestUrl } =
-    useContext(AppContext);
+  const { setEditNote, setRequestConfig } = useContext(AppContext);
 
   useEffect(() => {
     if (searchField === "") {
-      setRequestUrl(["get", "notes", null]);
+      setRequestConfig({ method: "get", url: "api/notes" });
     } else {
-      setRequestUrl(["post", "find-notes?", { title: `${searchField}` }]);
+      setRequestConfig({
+        method: "post",
+        url: "api/find-notes?",
+        data: { title: `${searchField}` },
+      });
     }
   }, [searchField]);
-
-  // useEffect(() => {
-  //   //setNotes(response);
-  //   console.log(requestUrl + " SIDE 2");
-  // }, [requestUrl[2]]);
 
   const handleSearch = (e) => {
     e.preventDefault();

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import DailyLogo from "../src/assets/daily-logo.svg";
 import styles from "./SignUp.module.css";
-import useAxios from "../src/useAxios";
 import { AppContext } from "../src/AppContext";
 import { useForm } from "react-hook-form";
 import useAxiosFunction from "../src/hooks/useAxiosFunction";
@@ -15,10 +14,9 @@ const Registration = () => {
     submitText: "ورود",
   });
 
-  const [response, error, loading, fetchData] = useAxiosFunction();
+  const [response, , , fetchData] = useAxiosFunction();
 
-  const { requestUrl, setRequestUrl, setLoggedIn } = useContext(AppContext);
-  // const [response, ,] = useAxios(requestUrl[0], requestUrl[1], requestUrl[2]);
+  const { setLoggedIn } = useContext(AppContext);
 
   const {
     register,
@@ -33,7 +31,6 @@ const Registration = () => {
 
   useEffect(() => {
     if (response) {
-      console.log(response);
       switch (response.status) {
         case 200: {
           handleSuccessLogin(response.data);
@@ -44,15 +41,19 @@ const Registration = () => {
           break;
         }
         case 400: {
+          // todo: handleError
           break;
         }
         case 404: {
+          // todo: handleError
           break;
         }
         case 409: {
+          // todo: handleError
           break;
         }
         case 500: {
+          // todo: handleError
           break;
         }
 
@@ -67,7 +68,6 @@ const Registration = () => {
     if (res) {
       localStorage.setItem("token", res.token);
       setLoggedIn(true);
-      //setRequestUrl(["get", "api/notes", null]);
     }
   }
   function handleUserSuccessRegisteration(res) {
@@ -101,7 +101,6 @@ const Registration = () => {
       password: params.password,
     };
 
-    console.log(user);
     fetchData({
       method: "post",
       url: `auth/${signup ? "register" : "login"}`,
@@ -193,7 +192,6 @@ const Registration = () => {
           <button type="submit" className={styles.btn}>
             {registerText.submitText}
           </button>
-          {/* {loading && <img className={styles.spinner} src={Spinner} />} */}
         </form>
         <span className={styles.text}>
           {registerText.span}
