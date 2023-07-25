@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { AppContext } from "../../AppContext";
 import styles from "./EditNote.module.css";
 import { formatdate } from "../../utils";
+import propType from "prop-types";
 
 const EditNote = ({ onSaveNote }) => {
   const titleText = useRef(null);
@@ -148,6 +149,10 @@ const EditNote = ({ onSaveNote }) => {
       </a>
     </div>
   );
+};
+
+EditNote.propType = {
+  onSaveNote: propType.func.isRequired,
 };
 
 export default EditNote;

@@ -2,6 +2,8 @@ import "./modal.css";
 import spinner from "../../../src/assets/loading-spinner.svg";
 import error from "../../../src/assets/error.svg";
 import success from "../../../src/assets/sucess.svg";
+import propTypes from "prop-types";
+
 const Modal = ({ modal, onPositive, onNegative }) => {
   const content = () => {
     if (modal?.isLoadingModal) {
@@ -51,6 +53,12 @@ const Modal = ({ modal, onPositive, onNegative }) => {
       <div className="modal-content-container">{content()}</div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  modal: propTypes.arrayOf(propTypes.any),
+  onPositive: propTypes.func,
+  onNegative: propTypes.func,
 };
 
 export default Modal;

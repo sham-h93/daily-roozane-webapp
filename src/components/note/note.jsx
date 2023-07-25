@@ -4,7 +4,13 @@ import { formatdate } from "../../utils";
 import { useContext, useRef } from "react";
 import { AppContext } from "../../AppContext";
 import { useEffect } from "react";
+import propTypes from "prop-types";
 const Note = ({ onNoteClick, note }) => {
+  Note.propTypes = {
+    onNoteClick: propTypes.func,
+    note: propTypes.arrayOf(propTypes.string),
+  };
+
   const divRef = useRef("#0EBCCE");
   const { setModal } = useContext(AppContext);
 
