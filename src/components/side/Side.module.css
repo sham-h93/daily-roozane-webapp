@@ -1,4 +1,4 @@
-.app-side {
+.appSide {
   width: 20%;
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   padding: 16px;
 }
 
-.app-side form {
+.searchContainer {
   width: 100%;
   display: flex;
   align-items: center;
@@ -15,7 +15,7 @@
   background-color: var(--highlight-color);
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.15);
   color: #555;
-  padding: 16px;
+  padding: 8px;
   margin: 8px;
   border: none;
   border-radius: 20px;
@@ -23,7 +23,7 @@
   outline: none;
 }
 
-.side-search {
+.searchField {
   background-color: transparent;
   width: 100%;
   border-radius: 16px;
@@ -31,12 +31,11 @@
   font-size: 20px;
   border: none;
 }
-
-form :focus {
-  outline: none;
+.searchField:focus {
+  border: none;
 }
 
-.side-add-note {
+.addNote {
   width: 100%;
   background-color: var(--primary-color);
   display: flex;
@@ -49,10 +48,7 @@ form :focus {
   user-select: none;
 }
 
-.side-search-icon {
-  font-size: 32px;
-}
-.side-add-note:hover {
+.addNote:hover {
   background-color: var(--side-highlight-color);
   color: white;
 }

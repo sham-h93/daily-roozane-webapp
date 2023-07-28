@@ -3,7 +3,7 @@ import { AppContext } from "../../AppContext";
 import Note from "../note/note";
 import EditNote from "../edit-note/editNote";
 import Modal from "../modal/modal";
-import "./notes.css";
+import styles from "./Notes.module.css";
 import RoozaneIllustration from "../../assets/roozane-illustration.svg";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
 import { useCallback } from "react";
@@ -109,13 +109,13 @@ const Notes = () => {
 
   function noNotes() {
     return (
-      <div className="noNotes">
+      <div className={styles.noNotes}>
         <img
-          className="roozaneIllstration"
+          className={styles.roozaneIllstration}
           src={RoozaneIllustration}
           alt="روزانه"
         />
-        <h3 className="noNoteMessage">یادداشتی یافت نشد</h3>
+        <h3 className={styles.noNoteMessage}>یادداشتی یافت نشد</h3>
       </div>
     );
   }
@@ -138,7 +138,7 @@ const Notes = () => {
 
   const handleNotesList = () => {
     return (
-      <ul className="app-notes-list">
+      <ul className={styles.notesList}>
         {notes.map((note) => (
           <li key={note._id}>
             <Note
@@ -154,7 +154,7 @@ const Notes = () => {
   };
 
   return (
-    <div className="app-notes">
+    <div className={styles.notes}>
       {modal.show && (
         <Modal
           modal={modal}

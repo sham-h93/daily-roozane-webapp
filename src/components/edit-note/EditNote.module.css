@@ -43,6 +43,7 @@
 .input {
   font-family: yekan;
   grid-column: 1 / span 4;
+  background-color: white;
   color: #555;
   padding: 16px;
   border: none;

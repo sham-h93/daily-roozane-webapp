@@ -1,19 +1,16 @@
-.app-notes {
+.notes {
   width: 80%;
   display: flex;
   flex-direction: column;
 }
 
-.app-notes-list {
+.notesList {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 32px;
   overflow-y: scroll;
-  padding: 24px 16px 0px 16px;
+  padding: 24px 16px 24px 16px;
   margin: 0px;
-}
-
-.app-notes-list li {
 }
 
 .noNotes {

@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { MdSearch, MdEditNote } from "react-icons/md";
 import { AppContext } from "../../AppContext";
-import "./side.css";
+import styles from "./Side.module.css";
 
 const Side = () => {
   const [searchField, setSearchField] = useState("");
@@ -17,6 +17,7 @@ const Side = () => {
         data: { title: `${searchField}` },
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchField]);
 
   const handleSearch = (e) => {
@@ -29,19 +30,19 @@ const Side = () => {
   };
 
   return (
-    <div className="app-side">
-      <form>
-        <MdSearch className="side-search-icon" />
+    <div className={styles.appSide}>
+      <div className={styles.searchContainer}>
+        <MdSearch className="side-search-icon" size={32} />
         <input
-          className="side-search"
+          className={styles.searchField}
           type="search"
           placeholder="جستجوی یادداشت"
           onChange={handleSearch}
         />
-      </form>
+      </div>
 
-      <div className="side-add-note" onClick={handleNewNoteClick}>
-        <MdEditNote className="side-search-icon" />
+      <div className={styles.addNote} onClick={handleNewNoteClick}>
+        <MdEditNote className={styles.editNote} size={32} />
         افزودن یادداشت جدید
       </div>
     </div>
