@@ -34,7 +34,6 @@ const Notes = () => {
     if (response && response.data) {
       switch (response.status) {
         case 200: {
-          console.log(response);
           setNotes(response.data);
           break;
         }
@@ -47,7 +46,6 @@ const Notes = () => {
           break;
         }
         case (404, 500): {
-          console.log(response);
           break;
         }
       }
@@ -78,6 +76,7 @@ const Notes = () => {
       url: "api/delete-note?",
       data: object,
     });
+    setNote(null);
   };
 
   const handleSaveNote = (note) => {

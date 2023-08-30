@@ -4,14 +4,14 @@ import { formatdate } from "../../utils";
 import { useContext, useRef } from "react";
 import { AppContext } from "../../AppContext";
 import { useEffect } from "react";
-import propTypes from "prop-types";
+import PropTypes from "prop-types";
 const Note = ({ onNoteClick, note }) => {
-  const divRef = useRef("#0EBCCE");
+  const divRef = useRef();
   const { setModal } = useContext(AppContext);
 
   useEffect(() => {
     setColor();
-  }, [divRef.current]);
+  }, [divRef]);
 
   const handleNoteColor = () => {
     let noteColor;
@@ -46,6 +46,7 @@ const Note = ({ onNoteClick, note }) => {
   };
 
   const handleDeleteNote = () => {
+    console.log(note._id);
     setModal({
       show: true,
       isLoadingModal: false,
@@ -81,8 +82,14 @@ const Note = ({ onNoteClick, note }) => {
 };
 
 Note.propTypes = {
-  onNoteClick: propTypes.func,
-  note: propTypes.arrayOf(propTypes.string),
+  onNoteClick: PropTypes.func,
+  note: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    createdDate: PropTypes.string.isRequired,
+  }),
 };
 
 export default Note;

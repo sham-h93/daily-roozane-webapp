@@ -2,15 +2,20 @@ import classes from "./Home.module.css";
 import Side from "../src/components/side/side";
 import Notes from "../src/components/notes/notes";
 import Registration from "./Signup";
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import { AppContext } from "../src/AppContext";
 
 const Home = () => {
   const { setLoggedIn } = useContext(AppContext);
 
-  const homeContent = () => {
+  useEffect(() => {
     if (localStorage.getItem("token")) {
       setLoggedIn(true);
+    }
+  }, []);
+
+  const homeContent = () => {
+    if (localStorage.getItem("token")) {
       return (
         <>
           <Side />
