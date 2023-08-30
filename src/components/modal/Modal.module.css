@@ -1,4 +1,4 @@
-.modal-container {
+.modalContainer {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -8,7 +8,7 @@
   background-color: rgba(0, 0, 0, 0.05);
   z-index: 1000;
 }
-.modal-content-container {
+.contentContainer {
   max-width: 520px;
   display: grid;
   padding: 24px;
@@ -19,24 +19,24 @@
   grid-template-columns: auto auto auto auto;
   gap: 8px;
 }
-.modal-alert {
+.modalAlert {
   width: 100px;
   grid-column: 2 / span 2;
   padding: 8px 8px 8px 8px;
 }
 
-.modal-loading-spinner {
+.spinner {
   width: 80px;
   grid-column: 2 / span 2;
 }
 
-.modal-title {
+.modalTitle {
   grid-column: 1 / span 4;
   text-align: center;
   font-size: 20px;
   color: var(--text-color);
 }
-.modal-description {
+.modalDescription {
   grid-column: 1 / span 4;
   text-align: center;
   font-size: 16px;
@@ -48,6 +48,8 @@ button {
   border: 1px solid var(--primary-color);
   border-radius: 100px;
   background-color: white;
+  font-family: yekan;
+  font-size: 18px;
   padding: 8px 32px 8px 32px;
   margin-top: 8px;
   color: var(--primary-color);
@@ -57,9 +59,9 @@ button {
 button:hover {
   background-color: var(--highlight-color);
 }
-.modal-positive-btn {
+.positiveButton {
   grid-column: 2 / span 1;
 }
-.modal-negative-btn {
+.negativeButton {
   grid-column: 3 / span 1;
 }

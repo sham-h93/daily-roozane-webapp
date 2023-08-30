@@ -1,16 +1,17 @@
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import "./note.css";
+import styles from "./Note.module.css";
 import { formatdate } from "../../utils";
 import { useContext, useRef } from "react";
 import { AppContext } from "../../AppContext";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 const Note = ({ onNoteClick, note }) => {
-  const divRef = useRef("#0EBCCE");
+  const divRef = useRef();
   const { setModal } = useContext(AppContext);
 
   useEffect(() => {
     setColor();
-  }, [divRef.current]);
+  }, [divRef]);
 
   const handleNoteColor = () => {
     let noteColor;
@@ -45,6 +46,7 @@ const Note = ({ onNoteClick, note }) => {
   };
 
   const handleDeleteNote = () => {
+    console.log(note._id);
     setModal({
       show: true,
       isLoadingModal: false,
@@ -59,24 +61,35 @@ const Note = ({ onNoteClick, note }) => {
   };
 
   return (
-    <div className="note-container">
-      <div className="note-color-div" ref={divRef}></div>
-      <a className="note-title" onClick={onNoteClick}>
+    <div className={styles.container}>
+      <div className={styles.noteColor} ref={divRef}></div>
+      <a className={styles.noteTitle} onClick={onNoteClick}>
         {note.title}
       </a>
-      <a className="note-decription" onClick={onNoteClick}>
+      <a className={styles.noteDescription} onClick={onNoteClick}>
         {note.description}
       </a>
-      <a className="note-date" dir="ltr">
-        {formatdate(note.createdDate)}
-      </a>
-      <div className="note-btns-div">
-        <div className="note-delete" onClick={handleDeleteNote}>
+      <div className={styles.buttonsContainer}>
+        <div className={styles.deleteNote} onClick={handleDeleteNote}>
           <MdOutlineDeleteOutline />
         </div>
-      </div>
+      </div>{" "}
+      <a className={styles.noteDate} dir="ltr">
+        {formatdate(note.createdDate)}
+      </a>
     </div>
   );
+};
+
+Note.propTypes = {
+  onNoteClick: PropTypes.func,
+  note: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    createdDate: PropTypes.string.isRequired,
+  }),
 };
 
 export default Note;
